@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import prisma from '../config/db';
 import bcrypt from 'bcryptjs';
+import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import prisma from '../config/db';
 
 interface RegisterRequest extends Request {
     body: {
@@ -15,23 +15,19 @@ export const registerUser = async (req: RegisterRequest, res: Response): Promise
     const { name, email, password } = req.body;
 
     try {
-        // Check if the user already exists
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
 			res.status(400).json({ msg: 'User already exists' });
 			return;
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create the new user
         const user = await prisma.user.create({
             data: {
                 name,
                 email,
                 password: hashedPassword,
-                role: 'user', // Optional: set default role
+                role: 'user',
             },
         });
 
@@ -107,39 +103,6 @@ export const getUsers = async (_req: Request, res: Response) => {
         const users = await prisma.user.findMany();
         res.status(200).json(users);
     } catch (err : any) {
-        res.status(500).json({ msg: 'Server error', error: err.message });
-    }
-};
-
-interface PostKYCRequest extends Request {
-    params: {
-        id: string;
-    };
-    body: {
-        kycData: any;
-    };
-}
-
-export const postKYCForm = async (req: PostKYCRequest, res: Response): Promise<void> => {
-    const { id } = req.params;
-    const { kycData } = req.body;
-
-    try {
-        // Find the user by ID
-        const user = await prisma.user.findUnique({ where: { id } });
-        if (!user) {
-            res.status(404).json({ msg: 'User not found' });
-            return;
-        }
-
-        // Update KYC data
-        const updatedUser = await prisma.user.update({
-            where: { id },
-            data: { kycData },
-        });
-
-        res.status(200).json({ msg: 'KYC form submitted successfully', user: updatedUser });
-    } catch (err: any) {
         res.status(500).json({ msg: 'Server error', error: err.message });
     }
 };
