@@ -9,15 +9,15 @@ interface PostKYCRequest extends Request {
     };
     body: {
         kycData: any;
-        file: Express.Multer.File;
+        // file: Express.Multer.File;
     };
 }
 
+
 export const postKYCForm = async (req: PostKYCRequest, res: Response): Promise<void> => {
     const { id } = req.params;
-    const { kycData } = req.body;
 
-    // Handle file upload with multer
+    // Use multer to handle file upload
     uploadFile(req, res, async (err: any) => {
         if (err) {
             res.status(400).json({ msg: 'File upload error', error: err.message });
@@ -25,15 +25,18 @@ export const postKYCForm = async (req: PostKYCRequest, res: Response): Promise<v
         }
 
         try {
+            // Parse kycData from the request body
+            const kycData = JSON.parse(req.body.kycData || '{}');
+
             const user = await prisma.user.findUnique({ where: { id } });
             if (!user) {
                 res.status(404).json({ msg: 'User not found' });
                 return;
             }
 
-            // Upload the file to Cloudinary and get the URL
+            // Upload file to Cloudinary
             let fileUrl = '';
-            if (req.file) {
+            if (req.file) { // Use req.file provided by multer
                 const uploadResult = await uploadToCloudinary(req.file);
                 fileUrl = uploadResult.secure_url; // Cloudinary URL of the uploaded file
             }
@@ -44,13 +47,13 @@ export const postKYCForm = async (req: PostKYCRequest, res: Response): Promise<v
                 data: {
                     kycData: {
                         ...kycData,
-                        fileUrl, // Save file URL in kycData
+                        fileUrl,
                     },
                 },
             });
 
             res.status(200).json({
-                msg: 'KYC form submitted successfully',
+                msg: 'KYC form submitted successfully!',
                 user: updatedUser,
             });
         } catch (err: any) {
@@ -58,6 +61,7 @@ export const postKYCForm = async (req: PostKYCRequest, res: Response): Promise<v
         }
     });
 };
+
 
 
 interface UpdateKycRequest extends Request { 

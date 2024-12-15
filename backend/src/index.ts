@@ -2,6 +2,9 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/usersRoutes';
+import statRoutes from './routes/statsRoutes';
+import kycRoutes from './routes/kycsRoutes';
+import authRoutes from './routes/authRoutes';
 import cors from 'cors'; // Import CORS
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -12,14 +15,19 @@ const app = express();
 app.use(bodyParser.json());
 
 const corsOptions = {
-    origin: '*',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Method'],
+    credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
 
 app.use('/api', userRoutes);
+app.use('/dashboard', statRoutes);
+app.use('/kyc', kycRoutes);
+app.use('/auth', authRoutes);
 
 
 // Cloudinary configuration

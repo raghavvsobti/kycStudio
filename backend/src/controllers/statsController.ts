@@ -4,33 +4,34 @@ import prisma from '../config/db';
 
 export const getStats = async (req: Request, res: Response): Promise<void> => { 
     try {
-        const [pendingKyc, ApprovedKyc, rejectedKyc, totalUsers] = await Promise.all([
+        const [totalPending, totalApproved, totalRejected, totalUsers] = await Promise.all([
             prisma.user.count({
                 where: {
-                    kycStatus: "pending"
+                    kycStatus: { in: ["pending", "PENDING"] }
                 }
             }),
             prisma.user.count({
                 where: {
-                    kycStatus: "approved"
+                    kycStatus:  { in: ["approved", "APPROVED"] }
                 }
             }),
             prisma.user.count({
                 where: {
-                    kycStatus: "rejected"
+                    kycStatus:  { in: ["rejected", "REJECTED"] }
                 }
             }),
             prisma.user.count(),
         ])
 
         res.status(200).json({
-            msg: 'KYC status updated successfully!', stats: {
-                pendingKyc,
-                ApprovedKyc,
-                rejectedKyc,
+            msg: 'Stats fetched Successfuly!', stats: {
+                totalPending,
+                totalApproved,
+                totalRejected,
                 totalUsers
         } });
     } catch (err: any) {
         res.status(500).json({ msg: 'Server error', error: err.message });
+        console.log({ msg: 'Server error', error: err.message }, "getStats")
     }
 }

@@ -5,7 +5,10 @@ import isAdmin from '../middlewares/isAdmin';
 
 const router = express.Router();
 
-router.post('/kycform/:id', isAuthenticated, postKYCForm); 
+router.post('/kycform/:id',
+	// isAuthenticated,
+	postKYCForm
+); 
 router.post('/update/kycstatus/:id', isAuthenticated, isAdmin, updateKycStatus); 
 
 export default router;

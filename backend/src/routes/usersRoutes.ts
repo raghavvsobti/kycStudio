@@ -1,17 +1,13 @@
 import express from 'express';
 import {
-    registerUser,
-    loginUser,
     getUser,
-    getUsers,
+    getUsers
 } from '../controllers/usersController';
-import isAuthenticated from '../middlewares/isAuthenticated';
 import isAdmin from '../middlewares/isAdmin';
+import isAuthenticated from '../middlewares/isAuthenticated';
 
 const router = express.Router();
 
-router.post('/register', registerUser); 
-router.post('/login', loginUser);       
 router.get('/user/:id', isAuthenticated, getUser);  
 router.get('/users', isAuthenticated, isAdmin, getUsers);    
 
