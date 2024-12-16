@@ -5,7 +5,7 @@ import userRoutes from './routes/usersRoutes';
 import statRoutes from './routes/statsRoutes';
 import kycRoutes from './routes/kycsRoutes';
 import authRoutes from './routes/authRoutes';
-import cors from 'cors'; // Import CORS
+import cors, { CorsOptions } from 'cors'; // Import CORS
 import { v2 as cloudinary } from 'cloudinary';
 
 dotenv.config();
@@ -14,12 +14,16 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const corsOptions = {
-    origin: ['http://localhost:3000', 'https://kyc-studio.vercel.app', '*'],
+const corsOptions: CorsOptions = {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        // Allow requests from any origin
+        callback(null, true);
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Method', 'Access-Control-Allow-Origin'],
-    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
+    credentials: true, // Allow cookies and authentication headers
 };
+
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
