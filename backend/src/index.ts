@@ -22,7 +22,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); 
+app.options('*', cors(corsOptions));
 
 app.use('/api', userRoutes);
 app.use('/dashboard', statRoutes);
@@ -32,9 +32,9 @@ app.use('/auth', authRoutes);
 
 // Cloudinary configuration
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,      
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 
@@ -42,8 +42,10 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to the API!');
 });
 
-const PORT = process.env.PORT || 5001;
+// const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+// });
+
+export default app;
