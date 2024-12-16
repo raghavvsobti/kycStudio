@@ -56,8 +56,6 @@ const Signup = () => {
 				}),
 			});
 
-			console.log(response);
-
 			// Check if the response is in the correct format before parsing
 			if (response?.ok) {
 				if (!loginMode) {
@@ -68,7 +66,6 @@ const Signup = () => {
 					return;
 				}
 				const data = await response?.json();
-				console.log(data, "data")
 				if (data?.token) {
 					localStorage.setItem("token", data?.token);
 					localStorage.setItem("user", data?.user?.email);

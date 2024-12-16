@@ -117,8 +117,6 @@ function Home() {
     e.preventDefault();
   };
 
-  console.log(user)
-
   return (
     <>
       {user && user?.role !== "admin" && user?.kycData?.fileUrl !== undefined &&

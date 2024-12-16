@@ -22,7 +22,6 @@ const Header = () => {
 			response
 				.json()
 				.then((data) => {
-					console.log(data, "logout data")
 					localStorage.clear();
 					setIsLoggedIn(false);
 					setUser(undefined);
