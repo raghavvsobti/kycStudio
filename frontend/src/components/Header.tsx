@@ -11,7 +11,7 @@ const Header = () => {
 	const { isLoggedIn, setIsLoggedIn, setUser, user } = useUniversalState();
 
 	const logout = async () => {
-		await fetch(`${BASE_URL}/auth/logout`, {
+		await fetch(`${process.env.BASE_URL || BASE_URL}/auth/logout`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

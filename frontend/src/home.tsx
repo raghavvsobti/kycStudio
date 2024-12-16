@@ -46,7 +46,7 @@ function Home() {
       const formData = new FormData();
       formData.append('file', file || e.target.files[0]);
       formData.append('kycData', JSON.stringify({ name, email }));
-      const response = await fetch(`${BASE_URL}/kyc/kycform/${user?.id}`, {
+      const response = await fetch(`${process.env.BASE_URL || BASE_URL}/kyc/kycform/${user?.id}`, {
         method: 'POST',
         body: formData,
         headers: {

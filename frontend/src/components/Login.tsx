@@ -43,7 +43,7 @@ const Signup = () => {
 		formData.append('password', password);
 
 		try {
-			const response = await fetch(loginMode ? `${BASE_URL}/auth/login` : `${BASE_URL}/auth/register`, {
+			const response = await fetch(loginMode ? `${process.env.BASE_URL || BASE_URL}/auth/login` : `${process.env.BASE_URL || BASE_URL}/auth/register`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

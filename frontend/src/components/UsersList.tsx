@@ -61,7 +61,7 @@ export function KYCUserList() {
 
 	const changeStatus = async (user: User, status: Status) => {
 		try {
-			const response = await fetch(`${BASE_URL}/kyc/update/kycstatus/${user?.id}`, {
+			const response = await fetch(`${process.env.BASE_URL || BASE_URL}/kyc/update/kycstatus/${user?.id}`, {
 				method: "POST",
 				headers: {
 					'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
@@ -73,8 +73,6 @@ export function KYCUserList() {
 			});
 
 			const data = await response.json()
-
-			console.log(data, "data")
 
 			if (!response.ok) {
 				toast.error(data?.msg)
@@ -93,7 +91,7 @@ export function KYCUserList() {
 
 	const fetchData = async () => {
 		try {
-			const response = await fetch(`${BASE_URL}/api/users`, {
+			const response = await fetch(`${process.env.BASE_URL || BASE_URL}/api/users`, {
 				method: "GET",
 				headers: {
 					'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
