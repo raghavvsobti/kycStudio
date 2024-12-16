@@ -38,7 +38,6 @@ export function KYCUserList() {
 
 	const handleStatusUpdate = async (newStatus: Status) => {
 		if (selectedUser) {
-			console.log(`Updating user ${selectedUser.id} status to ${newStatus}`)
 			await changeStatus(selectedUser, newStatus)
 			setIsModalOpen(false)
 			setSelectedUser(null)
@@ -53,7 +52,6 @@ export function KYCUserList() {
 	useEffect(() => {
 		(async () => {
 			const res = await fetchData();
-			console.log(res);
 			setUsers(res);
 		})()
 	}, [])
@@ -101,8 +99,6 @@ export function KYCUserList() {
 
 			const data = await response.json()
 
-			console.log(data, "data")
-
 			if (!response.ok) {
 				toast.error(data?.msg)
 				throw new Error('Network response was not ok');
@@ -125,8 +121,6 @@ export function KYCUserList() {
 			return null;
 		}
 	};
-
-	console.log(users, "users")
 
 	useEffect(() => {
 		fnBrowserDetect()

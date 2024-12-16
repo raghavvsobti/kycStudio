@@ -42,8 +42,6 @@ export function Dashboard() {
 
 			const data = await response.json()
 
-			console.log(data, "data")
-
 			if (!response.ok) {
 				toast.error(data?.msg)
 				throw new Error('Network response was not ok');

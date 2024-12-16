@@ -55,11 +55,9 @@ function Home() {
         },
       });
 
-      // console.log(response)
 
       if (response) {
         const data = await response.json();
-        // console.log(data)
         if (data.msg) {
           toast.success(data.msg)
         }
