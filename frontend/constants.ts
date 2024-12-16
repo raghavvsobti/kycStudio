@@ -11,4 +11,4 @@ export const colors: string[] = [
 	"#FFA500" // Orange
 ];
 
-export const BASE_URL = "http://localhost:5001"
+export const BASE_URL = process.env.BASE_URL || "http://localhost:5001"
