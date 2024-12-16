@@ -32,7 +32,7 @@ export function Dashboard() {
 
 	const fetchData = async () => {
 		try {
-			const response = await fetch(`${process.env.BASE_URL || BASE_URL}/dashboard/stats`, {
+			const response = await fetch(`${BASE_URL}/dashboard/stats`, {
 				method: "POST",
 				headers: {
 					'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
