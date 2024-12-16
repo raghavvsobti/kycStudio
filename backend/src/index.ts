@@ -15,7 +15,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://kyc-studio.vercel.app', '*'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Method'],
     credentials: true,

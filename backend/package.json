@@ -6,7 +6,6 @@
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
-    "vercel-build": "echo build ran sucessfully",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts",
