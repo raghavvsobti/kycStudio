@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const corsOptions = {
     origin: ['http://localhost:3000', 'https://kyc-studio.vercel.app', '*'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Method'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Method', 'Access-Control-Allow-Origin'],
     credentials: true,
 };
 
